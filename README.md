@@ -8,61 +8,13 @@
 
 Morph a spatial transcriptomics scatter plot into its UMAP embedding, colored
 by an `.obs` column (cell type, niche, cluster...), and render it as an mp4.
-That's the motivating case: watching each cell fly from where it physically
-sits in the tissue to where it lands transcriptomically is one of the most
-intuitive ways to *show* what a cluster or niche call means, rather than
-just asserting it in two side-by-side static plots. Built for presentations --
-a "flying dots" transition between two ways of looking at the same cells.
+ 
 
 The same machinery works for any pair of AnnData `.obsm` embeddings, not
 just spatial → UMAP -- PCA → UMAP, t-SNE → UMAP, before/after batch
 correction, etc. are all fully supported (just pass different `obsm_from`/
 `obsm_to` keys), spatial → UMAP just happens to be the case this package was
 built around.
-
-Because both `.obsm` arrays describe the same cells in the same row order,
-there's no cell-matching problem to solve -- cell `i` in one embedding *is*
-cell `i` in the other. The only real design problem is making the motion
-look coherent rather than chaotic, which is handled with:
-
-- **Procrustes alignment**: before interpolating, the starting embedding is
-  rotated/reflected/scaled onto the target embedding's frame (translation +
-  rotation + isotropic scale, least-squares optimal). Without this, two
-  embeddings that happen to be flipped or rotated relative to each other
-  produce a video where the whole cloud swings across the canvas instead of
-  cells flowing directly to their destination.
-- **Eased interpolation**: a smootherstep curve (zero velocity *and* zero
-  acceleration at both ends) instead of linear interpolation, so the
-  transition doesn't start/stop abruptly.
-- **Zoom-to-fit camera** (`zoom_to_fit=True`, default): each hold sits tight
-  around that embedding alone, and during the morph the camera continuously
-  tracks the *moving point cloud's own bounding box*, frame by frame --
-  naturally widening only as far as cells are actually spread out at that
-  instant, then settling back down as they converge on their destination,
-  rather than jumping to one fixed worst-case view for the whole morph.
-  Without this, an embedding whose Procrustes-aligned scale happens to be
-  small relative to the other (common for spatial vs UMAP -- a cell's
-  physical location and its transcriptomic UMAP position are only weakly
-  correlated, so the least-squares alignment scale ends up small) renders as
-  a tiny cluster in a canvas sized for the bigger one. Set `zoom_to_fit=False`
-  to keep one fixed view (spanning both embeddings) for the whole video instead.
-
-Also built in, all off by default so the base look stays clean and
-predictable: **flowing arcs + staggered launch** (`arc_strength=0.15`,
-`stagger=0.3` are good starting points) for a more organic "flock" motion --
-cells travel along a gentle curve rather than a straight line (every cell
-bulges to the same side of its own direction of travel, so the cloud reads
-as one coherent flow), and don't all launch in lockstep, though everyone
-still lands together by the last frame; **more color palettes** than
-matplotlib's defaults -- ColorBrewer, Tableau, and journal-style (`Nature`,
-`Science`, `Cell`, `JAMA`) qualitative palettes, ported from
-[scplotkit](https://github.com/philinscience/scplotkit)
-(`embedmorph.list_palettes()` for the full list, pass a name as `palette=`);
-**highlighting** one or more categories against a greyed-out background
-(`highlight=[...]`, as in scplotkit's `masked_umap_highlight`); and
-scanpy-style **point outlines** (`add_outline=True`, same construction as
-`sc.pl.embedding`'s own `add_outline`) so cells stand out from a dense
-background.
 
 ## Install
 
