@@ -1,8 +1,11 @@
-/* myst-nb writes a notebook figure's native pixel size onto its <img>/<video>
-   element as width/height attributes, and the theme's `max-width: 100%` then
-   shrinks the width to fit while height stays at the original value -- which
-   stretches the aspect ratio. `height: auto` restores it. */
+/* The theme only ships `img { max-width: 100% }` (see basic.css) -- <video>
+   gets no such rule, so embedded transition clips render at their native
+   pixel size (e.g. 1200x1050 for the default figsize/dpi) and overflow the
+   content column instead of scaling down to fit it. `height: auto` keeps
+   the aspect ratio once width is constrained. */
 .bd-content img,
 .bd-content video {
+    max-width: 100%;
     height: auto;
+    display: block;
 }

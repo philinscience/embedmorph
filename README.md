@@ -97,9 +97,9 @@ per video rather than looping inside one job.
 
 ## Documentation
 
-Full API reference and demonstration notebooks live in
-[`docs/`](docs/) and are published at https://embedmorph.readthedocs.io. To
-build the docs locally:
+Full docs (API reference + demo notebooks) are at
+https://embedmorph.readthedocs.io, source in [`docs/`](docs/). To build
+locally:
 
 ```bash
 pip install -e ".[docs]"
