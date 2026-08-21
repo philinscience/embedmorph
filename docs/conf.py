@@ -40,6 +40,7 @@ myst_enable_extensions = ["colon_fence"]
 
 html_theme = "sphinx_book_theme"
 html_title = "embedmorph"
+html_logo = "_static/embedmorph.png"
 html_css_files = ["custom.css"]
 html_theme_options = {
     "repository_url": "https://github.com/philinscience/embedmorph",
