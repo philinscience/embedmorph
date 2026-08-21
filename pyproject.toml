@@ -1,0 +1,57 @@
+[project]
+name = "embedmorph"
+version = "0.1.0"
+description = "Morph a spatial transcriptomics scatter plot into its UMAP embedding (or any .obsm-to-.obsm pair) as a video."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "embedmorph contributors" }]
+keywords = [
+  "single-cell",
+  "spatial",
+  "scanpy",
+  "anndata",
+  "visualization",
+  "bioinformatics",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+  "numpy",
+  "matplotlib",
+  "pandas",
+  "anndata",
+  "imageio",
+  "imageio-ffmpeg",
+]
+
+[project.optional-dependencies]
+progress = ["tqdm"]
+docs = [
+  "sphinx>=7.0",
+  "myst-nb>=1.0",
+  "sphinx-book-theme>=1.1",
+  "sphinx-autodoc-typehints>=1.24",
+]
+
+[project.urls]
+Homepage = "https://github.com/philinscience/embedmorph"
+Documentation = "https://embedmorph.readthedocs.io"
+Repository = "https://github.com/philinscience/embedmorph"
+Issues = "https://github.com/philinscience/embedmorph/issues"
+
+[project.scripts]
+embedmorph = "embedmorph.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["embedmorph*"]

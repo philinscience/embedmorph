@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.ipynb_checkpoints/
+docs/_build/
+outputs/*.mp4
+docs/demonstrations/*.mp4
+slurm/
+.DS_Store

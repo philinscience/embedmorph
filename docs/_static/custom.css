@@ -1,0 +1,8 @@
+/* myst-nb writes a notebook figure's native pixel size onto its <img>/<video>
+   element as width/height attributes, and the theme's `max-width: 100%` then
+   shrinks the width to fit while height stays at the original value -- which
+   stretches the aspect ratio. `height: auto` restores it. */
+.bd-content img,
+.bd-content video {
+    height: auto;
+}
